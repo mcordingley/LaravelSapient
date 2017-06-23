@@ -1,0 +1,30 @@
+{
+    "name": "mcordingley/laravel-sapient",
+    "description": "Sapient Integration for Laravel",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "MCordingley\\LaravelSapient\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "MCordingley\\LaravelSapient\\Test\\": "tests/"
+        }
+    },
+    "require": {
+        "paragonie/sodium_compat": "^1.0",
+        "paragonie/constant_time_encoding": "^2.0",
+        "laravel/framework": "^5.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.2"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Michael Cordingley",
+            "email": "Michael.Cordingley@gmail.com"
+        }
+    ]
+}
