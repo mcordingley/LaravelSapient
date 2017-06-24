@@ -4,6 +4,7 @@ namespace MCordingley\LaravelSapient\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use ParagonIE\Sapient\CryptographyKeys\SigningSecretKey;
 use Symfony\Component\HttpFoundation\Response;
 
 final class SignResponse

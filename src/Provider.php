@@ -8,6 +8,13 @@ use MCordingley\LaravelSapient\Console\GenerateSharedAuthenticationKey;
 use MCordingley\LaravelSapient\Console\GenerateSharedEncryptionKey;
 use MCordingley\LaravelSapient\Console\GenerateSigningKeyPair;
 use ParagonIE\ConstantTime\Base64UrlSafe;
+use ParagonIE\Sapient\Adapter\AdapterInterface;
+use ParagonIE\Sapient\Adapter\Diactoros;
+use ParagonIE\Sapient\CryptographyKeys\SealingSecretKey;
+use ParagonIE\Sapient\CryptographyKeys\SharedAuthenticationKey;
+use ParagonIE\Sapient\CryptographyKeys\SharedEncryptionKey;
+use ParagonIE\Sapient\CryptographyKeys\SigningSecretKey;
+use ParagonIE\Sapient\Sapient;
 
 final class Provider extends ServiceProvider
 {
@@ -16,7 +23,7 @@ final class Provider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->when(Sapient::class)->needs(AdapterInterface::class)->give(SymfonyAdapter::class);
+        $this->app->when(Sapient::class)->needs(AdapterInterface::class)->give(Diactoros::class);
 
         $this->bindKey(SealingSecretKey::class, 'sapient.sealing.private_key')
             ->bindKey(SharedAuthenticationKey::class, 'sapient.shared.authentication_key')

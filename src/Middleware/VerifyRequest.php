@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use MCordingley\LaravelSapient\Contracts\KeyResolver;
 use ParagonIE\ConstantTime\Base64UrlSafe;
+use ParagonIE\Sapient\CryptographyKeys\SigningPublicKey;
 use Symfony\Component\HttpFoundation\Response;
 
 final class VerifyRequest
