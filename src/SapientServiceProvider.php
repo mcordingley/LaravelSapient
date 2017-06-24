@@ -16,7 +16,7 @@ use ParagonIE\Sapient\CryptographyKeys\SharedEncryptionKey;
 use ParagonIE\Sapient\CryptographyKeys\SigningSecretKey;
 use ParagonIE\Sapient\Sapient;
 
-final class Provider extends ServiceProvider
+final class SapientServiceProvider extends ServiceProvider
 {
     /**
      * @return void
@@ -34,7 +34,7 @@ final class Provider extends ServiceProvider
     /**
      * @param string $concrete
      * @param string $configKey
-     * @return Provider
+     * @return SapientServiceProvider
      */
     private function bindKey(string $concrete, string $configKey): self
     {
