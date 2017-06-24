@@ -2,6 +2,7 @@
 
 namespace MCordingley\LaravelSapient\Console;
 
+use ParagonIE\ConstantTime\Base64UrlSafe;
 use Throwable;
 
 final class GenerateSealingKeyPair extends GenerateCommand
@@ -21,8 +22,8 @@ final class GenerateSealingKeyPair extends GenerateCommand
     {
         $pair = sodium_crypto_box_keypair();
 
-        $public = $this->encode(sodium_crypto_box_publickey($pair));
-        $private = $this->encode(sodium_crypto_box_secretkey($pair));
+        $public = Base64UrlSafe::encode(sodium_crypto_box_publickey($pair));
+        $private = Base64UrlSafe::encode(sodium_crypto_box_secretkey($pair));
 
         try {
             sodium_memzero($pair);

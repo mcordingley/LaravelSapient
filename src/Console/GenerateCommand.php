@@ -4,29 +4,10 @@ namespace MCordingley\LaravelSapient\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
-use ParagonIE\ConstantTime\Base64UrlSafe;
 
 abstract class GenerateCommand extends Command
 {
     use ConfirmableTrait;
-
-    /**
-     * @param string $key
-     * @return string
-     */
-    final protected function decode(string $key): string
-    {
-        return Base64UrlSafe::decode($key);
-    }
-
-    /**
-     * @param string $key
-     * @return string
-     */
-    final protected function encode(string $key): string
-    {
-        return Base64UrlSafe::encode($key);
-    }
 
     /**
      * @param string $key
