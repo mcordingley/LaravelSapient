@@ -41,14 +41,16 @@ final class SharedDecryptRequest
      */
     public function handle(Request $request, Closure $next): Response
     {
-        /** @var DiactorosRequest $psrRequest */
-        $psrRequest = $this->psrFactory->createRequest($request);
+        if (!in_array($request->method(), ['HEAD', 'GET', 'OPTIONS'])) {
+            /** @var DiactorosRequest $psrRequest */
+            $psrRequest = $this->psrFactory->createRequest($request);
 
-        $plainText = Simple::decrypt($psrRequest->getBody(), $this->key);
-        $psrRequest = $psrRequest->withBody(stream_for($plainText));
-        $request = Request::createFromBase($this->symfonyFactory->createRequest($psrRequest));
+            $plainText = Simple::decrypt($psrRequest->getBody(), $this->key);
+            $psrRequest = $psrRequest->withBody(stream_for($plainText));
+            $request = Request::createFromBase($this->symfonyFactory->createRequest($psrRequest));
 
-        app()->instance('request', $request);
+            app()->instance('request', $request);
+        }
 
         return $next($request);
     }

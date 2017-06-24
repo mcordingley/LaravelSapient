@@ -29,6 +29,10 @@ final class VerifyRequest
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if (in_array($request->method(), ['HEAD', 'GET', 'OPTIONS'])) {
+            return $next($request);
+        }
+
         $key = new SigningPublicKey(Base64UrlSafe::decode($this->resolver->resolveKey()));
 
         foreach ($request->headers->get('Body-Signature-Ed25519', null, false) as $signature) {

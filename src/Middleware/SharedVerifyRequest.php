@@ -28,6 +28,10 @@ final class SharedVerifyRequest
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if (in_array($request->method(), ['HEAD', 'GET', 'OPTIONS'])) {
+            return $next($request);
+        }
+
         foreach ($request->headers->get('Body-HMAC-SHA512256', null, false) as $signature) {
             if (sodium_crypto_auth_verify(Base64UrlSafe::decode($signature), $request->getContent(), $this->key->getString(true))) {
                 return $next($request);
