@@ -29,13 +29,14 @@ final class VerifyRequest
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $signature = $request->headers->get('Body-Signature-Ed25519');
         $key = new SigningPublicKey(Base64UrlSafe::decode($this->resolver->resolveKey()));
 
-        if (!sodium_crypto_sign_verify_detached($this->decode($signature), $request->getContent(), $key->getString(true))) {
-            abort(403, 'Invalid Sapient signature detected.');
+        foreach ($request->headers->get('Body-Signature-Ed25519', null, false) as $signature) {
+            if (sodium_crypto_sign_verify_detached(Base64UrlSafe::decode($signature), $request->getContent(), $key->getString(true))) {
+                return $next($request);
+            }
         }
 
-        return $next($request);
+        abort(403, 'Invalid Sapient signature detected.');
     }
 }
