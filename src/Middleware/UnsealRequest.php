@@ -46,7 +46,9 @@ final class UnsealRequest
 
         $plainText = Simple::unseal($psrRequest->getBody(), $this->key);
         $psrRequest = $psrRequest->withBody(stream_for($plainText));
-        $request = $this->symfonyFactory->createRequest($psrRequest);
+        $request = Request::createFromBase($this->symfonyFactory->createRequest($psrRequest));
+
+        app()->instance('request', $request);
 
         return $next($request);
     }
