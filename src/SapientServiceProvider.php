@@ -8,9 +8,11 @@ use MCordingley\LaravelSapient\Console\GenerateSharedAuthenticationKey;
 use MCordingley\LaravelSapient\Console\GenerateSharedEncryptionKey;
 use MCordingley\LaravelSapient\Console\GenerateSigningKeyPair;
 use ParagonIE\ConstantTime\Base64UrlSafe;
+use ParagonIE\Sapient\CryptographyKeys\SealingPublicKey;
 use ParagonIE\Sapient\CryptographyKeys\SealingSecretKey;
 use ParagonIE\Sapient\CryptographyKeys\SharedAuthenticationKey;
 use ParagonIE\Sapient\CryptographyKeys\SharedEncryptionKey;
+use ParagonIE\Sapient\CryptographyKeys\SigningPublicKey;
 use ParagonIE\Sapient\CryptographyKeys\SigningSecretKey;
 
 final class SapientServiceProvider extends ServiceProvider
@@ -20,9 +22,11 @@ final class SapientServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->bindKey(SealingSecretKey::class, 'sapient.sealing.private_key')
+        $this->bindKey(SealingPublicKey::class, 'sapient.sealing.public_key')
+            ->bindKey(SealingSecretKey::class, 'sapient.sealing.private_key')
             ->bindKey(SharedAuthenticationKey::class, 'sapient.shared.authentication_key')
             ->bindKey(SharedEncryptionKey::class, 'sapient.shared.encryption_key')
+            ->bindKey(SigningPublicKey::class, 'sapient.signing.public_key')
             ->bindKey(SigningSecretKey::class, 'sapient.signing.private_key');
     }
 
