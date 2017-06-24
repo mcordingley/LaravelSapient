@@ -61,6 +61,6 @@ For this example, the corresponding implementation of `KeyResolver` could be imp
 
 ## Using Your Stored Keys With Sapient
 
-If your project is also using Sapient for creating requests, you can and should use your generated keys with it. Simply
-use Laravel's container to resolve Sapient's cryptography key objects. They will be loaded with your keys from your
-configuration.
+If your project is also using Sapient for creating requests to other servers and processing their responses, you can and
+should use your generated keys with it. Simply use Laravel's container to resolve Sapient's cryptography key objects.
+They will be loaded with your keys from your configuration.
