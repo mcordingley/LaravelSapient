@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use ParagonIE\ConstantTime\Base64UrlSafe;
 use ParagonIE\Sapient\CryptographyKeys\SharedAuthenticationKey;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 final class SharedVerifyRequest
 {
@@ -38,6 +39,6 @@ final class SharedVerifyRequest
             }
         }
 
-        abort(403, 'Invalid Sapient signature detected.');
+        throw new HttpException(406, 'Invalid or missing Sapient signature detected.');
     }
 }
