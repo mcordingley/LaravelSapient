@@ -4,6 +4,7 @@ namespace MCordingley\LaravelSapient\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use ParagonIE\ConstantTime\Base64UrlSafe;
 use ParagonIE\Sapient\CryptographyKeys\SigningSecretKey;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -32,7 +33,7 @@ final class SignResponse
 
         $response->headers->set(
             'Body-Signature-Ed25519',
-            $this->encode(sodium_crypto_sign_detached($response->getContent(), $this->key->getString(true)))
+            Base64UrlSafe::encode(sodium_crypto_sign_detached($response->getContent(), $this->key->getString(true)))
         );
 
         return $response;
