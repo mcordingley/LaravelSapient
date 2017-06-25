@@ -8,6 +8,7 @@ use MCordingley\LaravelSapient\KeyResolver\Resolver;
 use ParagonIE\ConstantTime\Base64UrlSafe;
 use ParagonIE\Sapient\CryptographyKeys\SigningPublicKey;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 final class VerifyRequest
 {
@@ -41,6 +42,6 @@ final class VerifyRequest
             }
         }
 
-        abort(403, 'Invalid Sapient signature detected.');
+        throw new HttpException(406, 'Invalid or missing Sapient signature detected.');
     }
 }
