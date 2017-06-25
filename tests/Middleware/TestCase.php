@@ -12,7 +12,7 @@ abstract class TestCase extends BaseTestCase
      */
     final protected static function createRequest(): Request
     {
-        $parameters = '';
+        $parameters = 'foo=1&joy=2&test=bar';
         $parsed = [];
         parse_str($parameters, $parsed);
 
