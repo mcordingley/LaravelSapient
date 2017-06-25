@@ -28,6 +28,12 @@ final class UnsealRequestTest extends TestCase
         });
 
         static::assertEquals($unsealed, $response->getContent());
+
+        $boundRequest = app('request');
+
+        static::assertEquals('1', $boundRequest->input('foo'));
+        static::assertEquals('2', $boundRequest->input('joy'));
+        static::assertEquals('bar', $boundRequest->input('test'));
     }
 
     public function testBadKey()
