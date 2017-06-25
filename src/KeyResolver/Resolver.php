@@ -1,8 +1,8 @@
 <?php
 
-namespace MCordingley\LaravelSapient\Contracts;
+namespace MCordingley\LaravelSapient\KeyResolver;
 
-interface KeyResolver
+interface Resolver
 {
     /**
      * @return string Base64UrlSafe-encoded

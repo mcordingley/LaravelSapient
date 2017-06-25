@@ -4,20 +4,20 @@ namespace MCordingley\LaravelSapient\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use MCordingley\LaravelSapient\Contracts\KeyResolver;
+use MCordingley\LaravelSapient\KeyResolver\Resolver;
 use ParagonIE\ConstantTime\Base64UrlSafe;
 use ParagonIE\Sapient\CryptographyKeys\SigningPublicKey;
 use Symfony\Component\HttpFoundation\Response;
 
 final class VerifyRequest
 {
-    /** @var KeyResolver */
+    /** @var Resolver */
     private $resolver;
 
     /**
-     * @param KeyResolver $resolver
+     * @param Resolver $resolver
      */
-    public function __construct(KeyResolver $resolver)
+    public function __construct(Resolver $resolver)
     {
         $this->resolver = $resolver;
     }

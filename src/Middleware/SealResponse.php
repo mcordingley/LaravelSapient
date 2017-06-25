@@ -5,7 +5,7 @@ namespace MCordingley\LaravelSapient\Middleware;
 use Closure;
 use function GuzzleHttp\Psr7\stream_for;
 use Illuminate\Http\Request;
-use MCordingley\LaravelSapient\Contracts\KeyResolver;
+use MCordingley\LaravelSapient\KeyResolver\Resolver;
 use ParagonIE\Sapient\CryptographyKeys\SealingPublicKey;
 use ParagonIE\Sapient\Simple;
 use Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory;
@@ -21,13 +21,13 @@ final class SealResponse
     /** @var HttpFoundationFactory */
     private $symfonyFactory;
 
-    /** @var KeyResolver */
+    /** @var Resolver */
     private $resolver;
 
     /**
-     * @param KeyResolver $resolver
+     * @param Resolver $resolver
      */
-    public function __construct(KeyResolver $resolver)
+    public function __construct(Resolver $resolver)
     {
         $this->psrFactory = new DiactorosFactory;
         $this->symfonyFactory = new HttpFoundationFactory;
