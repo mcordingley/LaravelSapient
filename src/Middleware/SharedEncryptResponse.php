@@ -47,6 +47,9 @@ final class SharedEncryptResponse
         $psrResponse = $this->psrFactory->createResponse($response);
         $cipherText = Simple::decrypt($psrResponse->getBody(), $this->key);
 
-        return $this->symfonyFactory->createResponse($psrResponse->withBody(stream_for($cipherText)));
+        $symfonyResponse = $this->symfonyFactory->createResponse($psrResponse->withBody(stream_for($cipherText)));
+        $symfonyResponse->headers->set('Content-Length', strlen($cipherText));
+
+        return $symfonyResponse;
     }
 }

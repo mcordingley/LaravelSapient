@@ -50,6 +50,9 @@ final class SealResponse
         $key = new SealingPublicKey($this->resolver->resolveKey());
         $cipherText = Simple::seal($psrResponse->getBody(), $key);
 
-        return $this->symfonyFactory->createResponse($psrResponse->withBody(stream_for($cipherText)));
+        $symfonyResponse = $this->symfonyFactory->createResponse($psrResponse->withBody(stream_for($cipherText)));
+        $symfonyResponse->headers->set('Content-Length', strlen($cipherText));
+
+        return $symfonyResponse;
     }
 }
