@@ -28,9 +28,9 @@ trait ReplacesRequests
 
         /** @var SymfonyRequest $symfonyRequest */
         $symfonyRequest = $symfonyFactory->createRequest($psrRequest);
-        $symfonyRequest->headers->set('CONTENT_LENGTH', strlen($newBody));
+        $symfonyRequest->headers->set('Content-Length', strlen($newBody));
 
-        if (0 === strpos($symfonyRequest->headers->get('CONTENT_TYPE'), 'application/x-www-form-urlencoded')
+        if (0 === strpos($symfonyRequest->headers->get('Content-Type'), 'application/x-www-form-urlencoded')
             && in_array(strtoupper($symfonyRequest->server->get('REQUEST_METHOD', 'GET')), ['DELETE', 'PATCH', 'POST', 'PUT'])
         ) {
             $parsed = [];
