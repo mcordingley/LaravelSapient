@@ -2,8 +2,6 @@
 
 Sapient-compatible bindings for Laravel.
 
-Warning: The API for this library should be stable, but it has yet to be tested. Do not use just yet.
-
 ## Installation
 
 Install via composer with `composer require mcordingley/laravel-sapient` and then add
