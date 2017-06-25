@@ -45,7 +45,7 @@ final class SharedEncryptResponse
 
         /** @var DiactorosResponse $psrResponse */
         $psrResponse = $this->psrFactory->createResponse($response);
-        $cipherText = Simple::decrypt($psrResponse->getBody(), $this->key);
+        $cipherText = Simple::encrypt($psrResponse->getBody(), $this->key);
 
         $symfonyResponse = $this->symfonyFactory->createResponse($psrResponse->withBody(stream_for($cipherText)));
         $symfonyResponse->headers->set('Content-Length', strlen($cipherText));
