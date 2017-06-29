@@ -37,7 +37,7 @@ final class SapientServiceProvider extends ServiceProvider
      */
     private function bindKey(string $concrete, string $configKey): self
     {
-        $this->app->when($concrete)->needs('$key')->give(Base64UrlSafe::decode(config($configKey)));
+        $this->app->when($concrete)->needs('$key')->give(Base64UrlSafe::decode(config($configKey, '')));
 
         return $this;
     }
