@@ -4,7 +4,7 @@ namespace MCordingley\LaravelSapient\Console;
 
 use Throwable;
 
-final class GenerateSharedAuthenticationKey
+final class GenerateSharedAuthenticationKey extends GenerateCommand
 {
     /** @var string */
     protected $signature = 'sapient:generate:shared:authentication
