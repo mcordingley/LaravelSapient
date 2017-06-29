@@ -42,20 +42,27 @@ header to the response containing a MAC for the response body.
 and where the keys are stored can vary, these middleware cannot directly resolve the keys that they need from Laravel's
 container. You will have to provide the logic to return the appropriate public keys.
 
-Create an implementation of `MCordingley\LaravelSapient\Contracts\KeyResolver` that resolves the Base64UrlSafe-encoded
+Create an implementation of `MCordingley\LaravelSapient\KeyResolver\Resolver` that resolves the Base64UrlSafe-encoded
 public key needed and register it into Laravel's container with contextual binding. In one of your service providers,
 this may look like:
 
     $this->app->when(MCordingley\LaravelSapient\Middleware\VerifyRequest::class)
-        ->needs(MCordingley\LaravelSapient\Contracts\KeyResolver::class)
+        ->needs(MCordingley\LaravelSapient\KeyResolver\Resolver::class)
         ->give(Your\Implementation::class);
 
-For this example, the corresponding implementation of `KeyResolver` could be implemented this way:
+`UserResolver` is provided to cover the common case where keys are stored directly on the incoming request's `User`
+ object. Simply provide it with the property name where the key is stored and register it into Laravel's container. For
+ example:
 
-    public function resolveKey(): string
-    {
-        return request()->user()->signing_public_key;
-    }
+    $this->app->when(MCordingley\LaravelSapient\Middleware\SealResponse::class)
+        ->needs(MCordingley\LaravelSapient\KeyResolver\Resolver::class)
+        ->give(function () {
+            return new MCordingley\LaravelSapient\KeyResolver\UserResolver('sealing_public_key'); 
+        });
+
+`StaticResolver` is also provided. It will resolve whatever key is passed into its constructor. It exists primarily for
+testing purposes, but may be of use in niche circumstances or if you want to place key-resolution logic directly into
+your service provider.
 
 ## Using Your Stored Keys With Sapient
 
