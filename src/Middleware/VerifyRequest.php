@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use MCordingley\LaravelSapient\KeyResolver\Resolver;
 use ParagonIE\ConstantTime\Base64UrlSafe;
 use ParagonIE\Sapient\CryptographyKeys\SigningPublicKey;
+use ParagonIE\Sapient\Sapient;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -36,7 +37,7 @@ final class VerifyRequest
 
         $key = new SigningPublicKey(Base64UrlSafe::decode($this->resolver->resolveKey()));
 
-        foreach ($request->headers->get('Body-Signature-Ed25519', null, false) as $signature) {
+        foreach ($request->headers->get(Sapient::HEADER_SIGNATURE_NAME, null, false) as $signature) {
             if (sodium_crypto_sign_verify_detached(Base64UrlSafe::decode($signature), $request->getContent(), $key->getString(true))) {
                 return $next($request);
             }

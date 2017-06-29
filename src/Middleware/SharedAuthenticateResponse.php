@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use ParagonIE\ConstantTime\Base64UrlSafe;
 use ParagonIE\Sapient\CryptographyKeys\SharedAuthenticationKey;
+use ParagonIE\Sapient\Sapient;
 use Symfony\Component\HttpFoundation\Response;
 
 final class SharedAuthenticateResponse
@@ -32,7 +33,7 @@ final class SharedAuthenticateResponse
         $response = $next($request);
 
         $response->headers->set(
-            'Body-HMAC-SHA512256',
+            Sapient::HEADER_AUTH_NAME,
             Base64UrlSafe::encode(sodium_crypto_auth($response->getContent(), $this->key->getString(true)))
         );
 

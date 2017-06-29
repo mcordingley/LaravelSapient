@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use ParagonIE\ConstantTime\Base64UrlSafe;
 use ParagonIE\Sapient\CryptographyKeys\SharedAuthenticationKey;
+use ParagonIE\Sapient\Sapient;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -33,7 +34,7 @@ final class SharedVerifyRequest
             return $next($request);
         }
 
-        foreach ($request->headers->get('Body-HMAC-SHA512256', null, false) as $signature) {
+        foreach ($request->headers->get(Sapient::HEADER_AUTH_NAME, null, false) as $signature) {
             if (sodium_crypto_auth_verify(Base64UrlSafe::decode($signature), $request->getContent(), $this->key->getString(true))) {
                 return $next($request);
             }

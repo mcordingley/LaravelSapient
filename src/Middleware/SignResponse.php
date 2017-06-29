@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use ParagonIE\ConstantTime\Base64UrlSafe;
 use ParagonIE\Sapient\CryptographyKeys\SigningSecretKey;
+use ParagonIE\Sapient\Sapient;
 use Symfony\Component\HttpFoundation\Response;
 
 final class SignResponse
@@ -32,7 +33,7 @@ final class SignResponse
         $response = $next($request);
 
         $response->headers->set(
-            'Body-Signature-Ed25519',
+            Sapient::HEADER_SIGNATURE_NAME,
             Base64UrlSafe::encode(sodium_crypto_sign_detached($response->getContent(), $this->key->getString(true)))
         );
 
