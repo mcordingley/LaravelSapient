@@ -2,6 +2,7 @@
 
 namespace MCordingley\LaravelSapient;
 
+use Illuminate\Contracts\Config\Repository;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Lumen\Application as LumenApplication;
@@ -39,7 +40,14 @@ final class SapientServiceProvider extends ServiceProvider
      */
     private function bindKey(string $concrete, string $configKey): self
     {
-        $this->app->when($concrete)->needs('$key')->give(Base64UrlSafe::decode(config($configKey, '')));
+        /** @var Repository $config */
+        $config = $this->app->make('config');
+
+        $this->app->when($concrete)
+            ->needs('$key')
+            ->give(function () use ($config, $configKey) {
+                return Base64UrlSafe::decode($config->get($configKey));
+            });
 
         return $this;
     }
