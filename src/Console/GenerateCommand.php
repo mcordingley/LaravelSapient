@@ -25,14 +25,13 @@ abstract class GenerateCommand extends Command
      */
     final protected function writeConfigurationValue(string $key, string $value)
     {
-        $contents = file_get_contents($this->laravel->environmentFilePath());
-
         $pattern = "/^$key=.*$/m";
         $line = $key . '=' . $value;
 
-        file_put_contents(
-            $this->laravel->environmentFilePath(),
-            preg_match($pattern, $contents) ? preg_replace($pattern, $line, $contents) : $contents . "\n" . $line
-        );
+        $filePath = $this->laravel->basePath() . '/.env';
+        $contents = file_get_contents($filePath);
+        $updated = preg_match($pattern, $contents) ? preg_replace($pattern, $line, $contents) : $contents . "\n" . $line;
+
+        file_put_contents($filePath, $updated);
     }
 }
