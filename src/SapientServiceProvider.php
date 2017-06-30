@@ -2,7 +2,9 @@
 
 namespace MCordingley\LaravelSapient;
 
+use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Lumen\Application as LumenApplication;
 use MCordingley\LaravelSapient\Console\GenerateSealingKeyPair;
 use MCordingley\LaravelSapient\Console\GenerateSharedAuthenticationKey;
 use MCordingley\LaravelSapient\Console\GenerateSharedEncryptionKey;
@@ -56,8 +58,14 @@ final class SapientServiceProvider extends ServiceProvider
             ]);
         }
 
-        $this->publishes([
-            __DIR__ . '/config.php' => config_path('sapient.php'),
-        ]);
+        $source = realpath($raw = __DIR__ . '/config.php') ?: $raw;
+
+        if ($this->app instanceof LaravelApplication && $this->app->runningInConsole()) {
+            $this->publishes([$source => config_path('sapient.php')]);
+        } elseif ($this->app instanceof LumenApplication) {
+            $this->app->configure('sapient');
+        }
+
+        $this->mergeConfigFrom($source, 'sapient');
     }
 }
