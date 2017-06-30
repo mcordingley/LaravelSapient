@@ -6,6 +6,7 @@ use Closure;
 use function GuzzleHttp\Psr7\stream_for;
 use Illuminate\Http\Request;
 use MCordingley\LaravelSapient\KeyResolver\Resolver;
+use ParagonIE\ConstantTime\Base64UrlSafe;
 use ParagonIE\Sapient\CryptographyKeys\SealingPublicKey;
 use ParagonIE\Sapient\Simple;
 use Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory;
@@ -47,7 +48,7 @@ final class SealResponse
         /** @var DiactorosResponse $psrResponse */
         $psrResponse = $this->psrFactory->createResponse($response);
 
-        $key = new SealingPublicKey($this->resolver->resolveKey());
+        $key = new SealingPublicKey(Base64UrlSafe::decode($this->resolver->resolveKey()));
         $cipherText = Simple::seal($psrResponse->getBody(), $key);
 
         $symfonyResponse = $this->symfonyFactory->createResponse($psrResponse->withBody(stream_for($cipherText)));
