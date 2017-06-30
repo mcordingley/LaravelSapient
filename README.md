@@ -1,6 +1,6 @@
 # Laravel Sapient
 
-Sapient-compatible bindings for Laravel.
+[Sapient](https://github.com/paragonie/sapient)-compatible bindings for Laravel.
 
 ## Installation
 
