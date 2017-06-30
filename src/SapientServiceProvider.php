@@ -47,12 +47,14 @@ final class SapientServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->commands([
-            GenerateSealingKeyPair::class,
-            GenerateSharedAuthenticationKey::class,
-            GenerateSharedEncryptionKey::class,
-            GenerateSigningKeyPair::class,
-        ]);
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                GenerateSealingKeyPair::class,
+                GenerateSharedAuthenticationKey::class,
+                GenerateSharedEncryptionKey::class,
+                GenerateSigningKeyPair::class,
+            ]);
+        }
 
         $this->publishes([
             __DIR__ . '/config.php' => config_path('sapient.php'),
