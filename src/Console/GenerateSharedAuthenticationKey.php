@@ -2,6 +2,7 @@
 
 namespace MCordingley\LaravelSapient\Console;
 
+use ParagonIE\ConstantTime\Base64UrlSafe;
 use Throwable;
 
 final class GenerateSharedAuthenticationKey extends GenerateCommand
@@ -19,7 +20,7 @@ final class GenerateSharedAuthenticationKey extends GenerateCommand
      */
     public function fire()
     {
-        $key = $this->encode(random_bytes(SODIUM_CRYPTO_AUTH_KEYBYTES));
+        $key = Base64UrlSafe::encode(random_bytes(SODIUM_CRYPTO_AUTH_KEYBYTES));
 
         if ($this->option('show')) {
             $this->comment('<comment>Key: ' . $key . '</comment>');
