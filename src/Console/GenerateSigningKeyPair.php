@@ -18,7 +18,7 @@ final class GenerateSigningKeyPair extends GenerateCommand
     /**
      * @return void
      */
-    public function fire()
+    public function handle()
     {
         $pair = sodium_crypto_sign_keypair();
 
