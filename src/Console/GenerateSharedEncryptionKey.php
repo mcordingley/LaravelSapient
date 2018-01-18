@@ -18,7 +18,7 @@ final class GenerateSharedEncryptionKey extends GenerateCommand
     /**
      * @return void
      */
-    public function fire()
+    public function handle()
     {
         $key = Base64UrlSafe::encode(random_bytes(SODIUM_CRYPTO_AEAD_CHACHA20POLY1305_KEYBYTES));
 
