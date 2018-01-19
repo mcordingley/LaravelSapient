@@ -18,7 +18,7 @@ final class GenerateSealingKeyPair extends GenerateCommand
     /**
      * @return void
      */
-    public function fire()
+    public function handle()
     {
         $pair = sodium_crypto_box_keypair();
 

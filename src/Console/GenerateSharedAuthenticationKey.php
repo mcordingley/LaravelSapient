@@ -18,7 +18,7 @@ final class GenerateSharedAuthenticationKey extends GenerateCommand
     /**
      * @return void
      */
-    public function fire()
+    public function handle()
     {
         $key = Base64UrlSafe::encode(random_bytes(SODIUM_CRYPTO_AUTH_KEYBYTES));
 
