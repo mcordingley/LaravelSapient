@@ -15,16 +15,16 @@
     "require": {
         "paragonie/sodium_compat": "^1.0",
         "paragonie/constant_time_encoding": "^2.0",
-        "illuminate/console": "^5.4",
-        "illuminate/contracts": "^5.4",
-        "illuminate/http": "^5.4",
-        "illuminate/support": "^5.4",
+        "illuminate/console": "^5.4|^6.0",
+        "illuminate/contracts": "^5.4|^6.0",
+        "illuminate/http": "^5.4|^6.0",
+        "illuminate/support": "^5.4|^6.0",
         "symfony/psr-http-message-bridge": "^1.0",
         "paragonie/sapient": "^1.0.0",
         "zendframework/zend-diactoros": "^1.4"
     },
     "require-dev": {
-        "laravel/framework": "^5.4",
+        "laravel/framework": "^5.4|^6.0",
         "phpunit/phpunit": "^6.2"
     },
     "license": "MIT",
