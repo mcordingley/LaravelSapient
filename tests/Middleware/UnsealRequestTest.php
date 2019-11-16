@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use MCordingley\LaravelSapient\Middleware\UnsealRequest;
 use ParagonIE\Sapient\CryptographyKeys\SealingPublicKey;
 use ParagonIE\Sapient\CryptographyKeys\SealingSecretKey;
+use ParagonIE\Sapient\Exception\InvalidMessageException;
 use ParagonIE\Sapient\Simple;
 
 final class UnsealRequestTest extends TestCase
@@ -46,7 +47,7 @@ final class UnsealRequestTest extends TestCase
         $unsealed = 'foo=1&joy=2&test=bar';
         $request = Request::create('/foo', 'POST', [], [], [], [], Simple::seal($unsealed, $public));
 
-        static::expectException(Error::class);
+        static::expectException(InvalidMessageException::class);
 
         $middleware->handle($request, function (Request $request) {
             return new Response($request->getContent());

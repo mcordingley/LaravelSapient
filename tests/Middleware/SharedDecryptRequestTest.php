@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use MCordingley\LaravelSapient\Middleware\SharedDecryptRequest;
 use ParagonIE\Sapient\CryptographyKeys\SharedEncryptionKey;
+use ParagonIE\Sapient\Exception\InvalidMessageException;
 use ParagonIE\Sapient\Simple;
 
 final class SharedDecryptRequestTest extends TestCase
@@ -43,7 +44,7 @@ final class SharedDecryptRequestTest extends TestCase
         $decrypted = 'foo=1&joy=2&test=bar';
         $request = Request::create('/foo', 'POST', [], [], [], [], Simple::encrypt($decrypted, $badKey));
 
-        static::expectException(Error::class);
+        static::expectException(InvalidMessageException::class);
 
         $middleware->handle($request, function (Request $request) {
             return new Response($request->getContent());
